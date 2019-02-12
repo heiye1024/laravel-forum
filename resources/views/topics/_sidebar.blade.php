@@ -1,5 +1,7 @@
 <div class="card ">
   <div class="card-body">
-    sidebar
+    <a href="{{route('topics.create')}}" class="btn btn-success btn-block" aria-label="Left Align">
+      <i class="fas fa-pencil-alt mr-2"></i>  發表文章
+    </a>
   </div>
 </div>

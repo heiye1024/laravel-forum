@@ -6,11 +6,14 @@ use App\Models\Topic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TopicRequest;
+use App\Models\Category;
+use Auth;
 
 class TopicsController extends Controller
 {
     public function __construct()
     {
+        // 除了 index() 和 show() 以外的方法使用 auth middleware 進行認證
         $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
@@ -28,13 +31,17 @@ class TopicsController extends Controller
 
 	public function create(Topic $topic)
 	{
-		return view('topics.create_and_edit', compact('topic'));
+        $categories = Category::all();
+		return view('topics.create_and_edit', compact('topic', 'categories'));
 	}
 
-	public function store(TopicRequest $request)
+	public function store(TopicRequest $request, Topic $topic)
 	{
-		$topic = Topic::create($request->all());
-		return redirect()->route('topics.show', $topic->id)->with('message', 'Created successfully.');
+		$topic->fill($request->all());
+        $topic->user_id = Auth::id();
+        $topic->save();
+
+		return redirect()->route('topics.show', $topic->id)->with('message', '發文成功');
 	}
 
 	public function edit(Topic $topic)
