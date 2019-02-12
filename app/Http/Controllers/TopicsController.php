@@ -16,7 +16,8 @@ class TopicsController extends Controller
 
 	public function index()
 	{
-		$topics = Topic::paginate();
+        // 使用預加載功能解決N+1問題，with方法提前加載我們後面需要的關聯屬性，並作緩存，因此不會產生多餘的SQL查詢
+		$topics = Topic::with('user', 'category')->paginate(15);
 		return view('topics.index', compact('topics'));
 	}
 

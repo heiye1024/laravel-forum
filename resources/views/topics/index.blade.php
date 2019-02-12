@@ -17,7 +17,7 @@
       <div class="card-body">
         {{-- 主題列表 --}}
         @include('topics._topic_list', ['topics' => $topics])
-        {{-- 分頁 --}}
+        {{-- 分頁：為了後面要做排序功能，該功能使用URL傳遞參數來實現，所以使用分頁中的appends()方法使URI中的請求參數得到繼承 --}}
         <div class="mt-5">
           {!! $topics->appends(Request::except('page'))->render() !!}
         </div>
