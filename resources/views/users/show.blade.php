@@ -24,7 +24,11 @@
     <hr>
     <div class="card ">
       <div class="card-body">
-        暫時無資料
+        <ul class="nav nav-tabs">
+          <li class="nav-item"><a class="nav-link active bg-transparent" href="#">我的主題</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">我的回覆</a></li>
+        </ul>
+        @include('users._topics', ['topics' => $user->topics()->recent()->paginate(5)])
       </div>
     </div>
   </div>
