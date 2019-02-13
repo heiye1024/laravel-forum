@@ -68,6 +68,17 @@
     $(document).ready(function() {
       var editor = new Simditor({
         textarea: $('#editor'),
+        upload: {
+          url: '{{route('topics.upload_image')}}',
+          params: {
+            _token: '{{csrf_token()}}'
+          },
+          fileKey: 'upload_file',
+          // 最多只能同時上傳 3 張圖片
+          connectionCount: 3,
+          leaveConfirm: '文件上傳中，關閉頁面將取消上傳'
+        },
+        pasteImage: true,
       });
     });
   </script>

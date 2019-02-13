@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TopicRequest;
 use App\Models\Category;
 use Auth;
+use App\Handlers\ImageUploadHandler;
 
 class TopicsController extends Controller
 {
@@ -65,4 +66,26 @@ class TopicsController extends Controller
 
 		return redirect()->route('topics.index')->with('message', 'Deleted successfully.');
 	}
+
+    public function uploadImage(Request $request, ImageUploadHandler $uploader)
+    {
+        // 初始化傳回資料，默認是失敗的
+        $data = [
+            'success' => false,
+            'msg' => '上傳失敗!',
+            'file_path' => ''
+        ];
+        // 判斷是否有上傳文件，並且傳值給 $file
+        if ($file = $request->upload_file) {
+            // 儲存圖片到本機端
+            $result = $uploader->save($request->upload_file, 'topics', \Auth::id(), 1024);
+            // 圖片儲存成功的話
+            if ($result) {
+                $data['file_path'] = $result['path'];
+                $data['msg'] = "上傳成功!";
+                $data['success'] = true;
+            }
+        }
+        return $data;
+    }
 }
