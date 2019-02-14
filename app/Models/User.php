@@ -24,4 +24,10 @@ class User extends Authenticatable implements MustVerifyEmailContract
     {
         return $this->hasMany(Topic::class);
     }
+
+    // 判斷作者ID是否是目前登入的使用者ID
+    public function isAuthorOf($model)
+    {
+        return $this->id == $model->user_id;
+    }
 }
