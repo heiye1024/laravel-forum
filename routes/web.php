@@ -43,3 +43,5 @@ Route::post('upload_image', 'TopicsController@uploadImage')->name('topics.upload
 
 //{slug?} 可以是http://forum.test/topics/106或者http://forum.test/topics/slug-translation-test
 Route::get('topics/{topic}/{slug?}', 'TopicsController@show')->name('topics.show');
+
+Route::resource('replies', 'RepliesController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
