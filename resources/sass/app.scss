@@ -1,7 +1,4 @@
 
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
 
@@ -13,7 +10,6 @@
 @import '~@fortawesome/fontawesome-free/scss/regular';
 @import '~@fortawesome/fontawesome-free/scss/solid';
 @import '~@fortawesome/fontawesome-free/scss/brands';
-
 
 /* universal */
 
@@ -33,6 +29,7 @@ body {
   margin-bottom: 40px;
   margin-top: 0px;
 }
+
 
 /* Sticky footer styles */
 html {
@@ -68,10 +65,12 @@ body {
   }
 }
 
+
 /* User register page */
 .register-page {
   img.captcha {
     cursor: pointer;
+    border-radius: 4px;
     border: 1px solid #ced4da;
     border-radius: 4px;
     padding: 3px;
@@ -79,7 +78,7 @@ body {
 }
 
 /* Topic Index Page */
-.topics-index-page, .categories-show-page {
+.topics-index-page, .categories-show-page, .root-page {
   .topic-list {
     .nav>li>a {
       position: relative;
@@ -151,4 +150,20 @@ body {
         font-size: .9em;
         color: #b3b3b3;
     }
+}
+
+/* 消息通知 */
+.notification-badge {
+  .badge {
+    font-size: 12px;
+    margin-top: 14px;
+  }
+
+  .badge-secondary {
+    background-color: #EBE8E8;
+  }
+
+  .badge-hint {
+    background-color: #d15b47 !important;;
+  }
 }

@@ -11,11 +11,11 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!-- Left Side Of Navbar -->
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item {{active_class(if_route('topics.index'))}}"><a class="nav-link" href="{{route('topics.index')}}">主題</li>
-        <li class="nav-item {{category_nav_active(1)}}"><a class="nav-link" href="{{route('categories.show', 1)}}">分享</li>
-        <li class="nav-item {{category_nav_active(2)}}"><a class="nav-link" href="{{route('categories.show', 2)}}">教學</li>
-        <li class="nav-item {{category_nav_active(3)}}"><a class="nav-link" href="{{route('categories.show', 3)}}">問答</li>
-        <li class="nav-item {{category_nav_active(4)}}"><a class="nav-link" href="{{route('categories.show', 4)}}">公告</li>
+        <li class="nav-item {{active_class(if_route('topics.index'))}}"><a class="nav-link" href="{{route('topics.index')}}">主題</a></li>
+        <li class="nav-item {{category_nav_active(1)}}"><a class="nav-link" href="{{route('categories.show', 1)}}">分享</a></li>
+        <li class="nav-item {{category_nav_active(2)}}"><a class="nav-link" href="{{route('categories.show', 2)}}">教學</a></li>
+        <li class="nav-item {{category_nav_active(3)}}"><a class="nav-link" href="{{route('categories.show', 3)}}">問答</a></li>
+        <li class="nav-item {{category_nav_active(4)}}"><a class="nav-link" href="{{route('categories.show', 4)}}">公告</a></li>
       </ul>
 
       <!-- Right Side Of Navbar -->
@@ -28,6 +28,11 @@
           <li class="nav-item">
             <a class="nav-link mt-1 mr-3 font-weight-bold" href="{{route('topics.create')}}">
               <i class="fa fa-plus"></i>
+            </a>
+          </li>
+          <li class="nav-item notification-badge">
+            <a class="nav-link mr-3 badge badge-pill badge-{{Auth::user()->notification_count > 0 ? 'hint' : 'secondary'}} text-white" href="{{route('notifications.index')}}">
+              {{Auth::user()->notification_count}}
             </a>
           </li>
           <li class="nav-item dropdown">
