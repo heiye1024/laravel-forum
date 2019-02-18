@@ -30,4 +30,10 @@ class TopicObserver
             dispatch(new TranslateSlug($topic));
         }
     }
+
+    // 監控主題被刪除成功的事件，此事件發生時，所有回覆也連帶都要被刪除
+    public function deleted(Topic $topic)
+    {
+        \DB::table('replies')->where('topic_id', $topic->id)->delete();
+    }
 }
