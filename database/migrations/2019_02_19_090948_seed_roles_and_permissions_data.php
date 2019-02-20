@@ -49,5 +49,4 @@ class SeedRolesAndPermissionsData extends Migration
         DB::table($tableNames['permissions'])->delete();
         Model::reguard();
     }
-    }
 }
