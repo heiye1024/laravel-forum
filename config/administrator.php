@@ -37,6 +37,8 @@ return array(
     'menu' => [
         '使用者與權限' => [
             'users',
+            'roles',
+            'permissions',
         ],
     ],
 
