@@ -9,8 +9,9 @@
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{csrf_token()}}">
 
-  <title>@yield('title', 'Laravel-Forum') - Laravel 論壇系統</title>
-  <meta name="description" content="@yield('description', 'Laravel 愛好者社群')" />
+  <title>@yield('title', 'Laravel-Forum') - {{setting('site_name', 'Laravel 論壇系統')}}</title>
+  <meta name="description" content="@yield('description', setting('seo_description', 'Laravel 愛好者社群'))" />
+  <meta name="keyword" content="@yield('keyword', setting('seo_keyword', 'Laravel-Forum, 論壇, 開發者論壇'))" />
 
   <!-- Styles -->
   <link href="{{mix('css/app.css')}}" rel="stylesheet">
