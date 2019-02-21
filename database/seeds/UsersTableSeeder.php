@@ -12,12 +12,12 @@ class UsersTableSeeder extends Seeder
 
         // 頭像假數據
         $avatars = [
-            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/s5ehp11z6s.png',
-            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/Lhd1SHqu86.png',
-            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/LOnMrqbHJn.png',
-            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/xAuDMxteQy.png',
-            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/ZqM7iaP4CR.png',
-            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/NDnzMutoxX.png',
+            'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y',
+            'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=identicon&f=y',
+            'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=monsterid&f=y',
+            'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=wavatar&f=y',
+            'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y',
+            'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=robohash&f=y',
         ];
 
         // 產生數據集合
@@ -36,7 +36,7 @@ class UsersTableSeeder extends Seeder
         $user = User::find(1);
         $user->name = 'Sian';
         $user->email = 'sianchou@test.com';
-        $user->avatar = 'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/ZqM7iaP4CR.png';
+        $user->avatar = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
         $user->save();
         // 初始化使用者角色，將1號使用者指派為「站長」
         $user->assignRole('Founder');
