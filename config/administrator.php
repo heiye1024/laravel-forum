@@ -72,13 +72,13 @@ return array(
     'dashboard_view' => '',
 
     // 用來作為後台主頁的選單，由`use_dashboard`選項決定，選單指的是`menu`選項
-    'home_page' => 'users',
+    'home_page' => 'topics',
 
     // 右上角「返回主網站」按鈕的連結
     'back_to_site_path' => '/',
 
     // 當選項`permission`權限檢測不通過時，會重定向使用者到此處設置的路徑
-    'login_path' => 'login',
+    'login_path' => 'permission-denied',
 
     // 允許在登入成功後使用 Session::get('redirect')將使用者重定向到原本想要訪問的後台頁面
     'login_redirect_key' => 'redirect',
