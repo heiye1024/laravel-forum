@@ -26,6 +26,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        // 每小時執行一次「活躍使用者」數據產生的命令
+        $schedule->command('laravalforum:calculate-active-user')->hourly();
     }
 
     /**
