@@ -7,21 +7,10 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * The Artisan commands provided by your application.
-     *
-     * @var array
-     */
     protected $commands = [
         //
     ];
 
-    /**
-     * Define the application's command schedule.
-     *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
-     */
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')
@@ -29,13 +18,11 @@ class Kernel extends ConsoleKernel
 
         // 每小時執行一次「活躍使用者」數據產生的命令
         $schedule->command('laravalforum:calculate-active-user')->hourly();
+
+        // 每天 0 時執行一次
+        $schedule->command('laravalforum:sync-user-actived-at')->dailyAt('00:00');
     }
 
-    /**
-     * Register the commands for the application.
-     *
-     * @return void
-     */
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');
