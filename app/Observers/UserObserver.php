@@ -9,13 +9,11 @@ use App\Models\User;
 
 class UserObserver
 {
-    public function creating(User $user)
+    public function saving(User $user)
     {
-        //
-    }
-
-    public function updating(User $user)
-    {
-        //
+        // 這樣寫的擴充性較高，只有空的時候才指定默認頭像
+        if (empty($user->avatar)) {
+            $user->avatar = 'https://iocaffcdn.phphub.org/uploads/images/201710/30/1/TrJS40Ey5k.png';
+        }
     }
 }
