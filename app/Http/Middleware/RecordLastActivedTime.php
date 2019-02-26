@@ -12,7 +12,7 @@ class RecordLastActivedTime
         // 如果是登入使用者的話
         if (Auth::check()) {
             // 紀錄最後登入時間
-            Auth::user()->RecordLastActivedAt();
+            Auth::user()->recordLastActivedAt();
         }
 
         return $next($request);
