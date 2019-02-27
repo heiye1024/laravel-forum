@@ -2,6 +2,10 @@
 
 該專案使用Laravel建立論壇系統，功能將包含不同角色的使用者權限系統、管理員後台、註冊驗證碼、圖片上傳、圖片裁減、XSS防禦、自定義命令行、自定義中間件、任務調度、佇列系統的使用、應用緩存、Redis、模型事件監控、表單驗證、消息通知、郵件通知、模型修改器等。
 
+## 版本差異(Branch)
+- Web 版本 https://github.com/webcodedemo/laravel-forum
+- RESTful API 版本 https://github.com/webcodedemo/laravel-forum/tree/api
+
 ## 管理程式開發項目進度
 - https://github.com/webcodedemo/laravel-forum/projects
 
