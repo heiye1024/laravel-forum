@@ -229,4 +229,18 @@ return [
 
     ],
 
+    // API 頻率限制
+    'rate_limits' => [
+        // 訪問頻率限制，次數/分鐘(1分鐘調用60次)
+        'access' => [
+            'expires' => env('RATE_LIMITS_EXPIRES', 1),
+            'limit'  => env('RATE_LIMITS', 60),
+        ],
+        // 登入相關，次數/分鐘(1分鐘可以調用10次)
+        'sign' => [
+            'expires' => env('SIGN_RATE_LIMITS_EXPIRES', 1),
+            'limit'  => env('SIGN_RATE_LIMITS', 10),
+        ],
+    ],
+
 ];
