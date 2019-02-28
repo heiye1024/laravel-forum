@@ -25,4 +25,7 @@ $api->version('v1', [
     // 簡訊驗證碼
     $api->post('verificationCodes', 'VerificationCodesController@store')
         ->name('api.verificationCodes.store');
+    // 使用者註冊
+    $api->post('users', 'UsersController@store')
+        ->name('api.users.store');
 });
