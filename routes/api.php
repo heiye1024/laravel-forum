@@ -34,5 +34,8 @@ $api->version('v1', [
         // 使用者註冊
         $api->post('users', 'UsersController@store')
             ->name('api.users.store');
+        // 圖片驗證碼
+        $api->post('captchas', 'CaptchasController@store')
+            ->name('api.captchas.store');
     });
 });

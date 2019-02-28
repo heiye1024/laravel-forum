@@ -13,14 +13,17 @@ class VerificationCodeRequest extends FormRequest
 
     public function rules()
     {
-        // 台灣手機正規表示式 /^09[0-9]{8}$/
-        // 中國手機正規表示式
         return [
-            'phone' => [
-                'required',
-                'regex:/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/',
-                'unique:users'
-            ]
+            'captcha_key' => 'required|string',
+            'captcha_code' => 'required|string',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'captcha_key' => '圖片驗證碼 key',
+            'captcha_code' => '圖片驗證碼',
         ];
     }
 }
