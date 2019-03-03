@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
@@ -9,7 +10,7 @@ use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Auth;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements MustVerifyEmailContract
+class User extends Authenticatable implements JWTSubject
 {
     use Traits\LastActivedAtHelper;
     use Traits\ActiveUserHelper;
@@ -91,5 +92,17 @@ class User extends Authenticatable implements MustVerifyEmailContract
         }
 
         $this->attributes['avatar'] = $path;
+    }
+
+    // 返回 User 的 ID
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    // 需要額外在 JWT 中增加的自定義內容，返回空陣列
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }
