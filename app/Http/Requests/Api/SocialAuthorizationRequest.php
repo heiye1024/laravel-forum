@@ -2,14 +2,13 @@
 
 namespace App\Http\Requests\Api;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Dingo\Api\Http\FormRequest;
 
 class SocialAuthorizationRequest extends FormRequest
 {
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     public function rules()

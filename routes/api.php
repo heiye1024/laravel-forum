@@ -64,6 +64,12 @@ $api->version('v1', [
             // 當前登入使用者訊息
             $api->get('user', 'UsersController@me')
                 ->name('api.user.show');
+            // 編輯登入使用者訊息(put替換某個資源，需提供完整的資源訊息；這邊使用patch，是部分修改資源，提供部分資源訊息)
+            $api->patch('user', 'UsersController@update')
+                ->name('api.user.update');
+            // 圖片資源
+            $api->post('images', 'ImagesController@store')
+                ->name('api.images.store');
         });
     });
 });
