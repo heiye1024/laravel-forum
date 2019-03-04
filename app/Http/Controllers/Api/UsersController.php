@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Transformers\UserTransformer;
 use App\Http\Requests\Api\UserRequest;
 
 class UsersController extends Controller
@@ -33,6 +35,21 @@ class UsersController extends Controller
         \Cache::forget($request->verification_key);
 
         // 狀態碼為201，對建立新資源的POST操作進行回應。應該帶著指向新資源地址的 Location Header
-        return $this->response->created();
+        // 為了使用者註冊後，直接登入該使用者，所以需要返回一些數據
+        return $this->response->item($user, new UserTransformer())
+            ->setMeta([
+                'access_token' => \Auth::guard('api')->fromUser($user),
+                'token_type' => 'Bearer',
+                'expires_in' => \Auth::guard('api')->factory()->getTTL() * 60
+            ])
+            ->setStatusCode(201);
+    }
+
+    // 這裡使用Dingo\Api\Routing\Helpers中的trait，它提供了user方法，讓我們可以取得當前登入的使用者，也就是token對應的使用者
+    // $this->user()等同於\Auth::guard('api')->user()
+    // 我們返回的是一個單一資源，所以使用$this->response->item，第一個參數是模型實例，第二個參數是transformer
+    public function me()
+    {
+        return $this->response->item($this->user(), new UserTransformer());
     }
 }

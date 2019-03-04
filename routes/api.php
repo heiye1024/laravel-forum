@@ -20,7 +20,8 @@ use Illuminate\Http\Request;
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', [
-    'namespace' => 'App\Http\Controllers\Api'
+    'namespace' => 'App\Http\Controllers\Api',
+    'middleware' => 'serializer:array'
 ], function($api) {
 
     $api->group([
@@ -49,5 +50,20 @@ $api->version('v1', [
         // 刪除 token
         $api->delete('authorizations/current', 'AuthorizationsController@destroy')
             ->name('api.authorizations.destroy');
+    });
+
+    $api->group([
+        'middleware' => 'api.throttle',
+        'limit' => config('api.rate_limits.access.limit'),
+        'expires' => config('api.rate_limits.access.expires'),
+    ], function ($api) {
+        // 訪客可以訪問的API
+
+        // 需要token驗證的API
+        $api->group(['middleware' => 'api.auth'], function($api) {
+            // 當前登入使用者訊息
+            $api->get('user', 'UsersController@me')
+                ->name('api.user.show');
+        });
     });
 });
