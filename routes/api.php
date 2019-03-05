@@ -58,6 +58,8 @@ $api->version('v1', [
         'expires' => config('api.rate_limits.access.expires'),
     ], function ($api) {
         // 訪客可以訪問的API
+        $api->get('categories', 'CategoriesController@index')
+            ->name('api.categories.index');
 
         // 需要token驗證的API
         $api->group(['middleware' => 'api.auth'], function($api) {
