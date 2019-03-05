@@ -78,6 +78,9 @@ $api->version('v1', [
             // 修改主題(使用patch，Postman需使用x-www-form-urlencoded)
             $api->patch('topics/{topic}', 'TopicsController@update')
                 ->name('api.topics.update');
+            // 刪除主題
+            $api->delete('topics/{topic}', 'TopicsController@destroy')
+                ->name('api.topics.destroy');
         });
     });
 });
