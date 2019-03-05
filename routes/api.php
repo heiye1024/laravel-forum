@@ -21,7 +21,7 @@ $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', [
     'namespace' => 'App\Http\Controllers\Api',
-    'middleware' => 'serializer:array'
+    'middleware' => ['serializer:array', 'bindings']
 ], function($api) {
 
     $api->group([
@@ -75,6 +75,9 @@ $api->version('v1', [
             // 發佈主題
             $api->post('topics', 'TopicsController@store')
                 ->name('api.topics.store');
+            // 修改主題(使用patch，Postman需使用x-www-form-urlencoded)
+            $api->patch('topics/{topic}', 'TopicsController@update')
+                ->name('api.topics.update');
         });
     });
 });
