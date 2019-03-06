@@ -58,10 +58,16 @@ $api->version('v1', [
         'expires' => config('api.rate_limits.access.expires'),
     ], function ($api) {
         // 訪客可以訪問的API
+        // 分類列表
         $api->get('categories', 'CategoriesController@index')
             ->name('api.categories.index');
+        // 主題列表
         $api->get('topics', 'TopicsController@index')
             ->name('api.topics.index');
+        // 主題詳細內容
+        $api->get('topics/{topic}', 'TopicsController@show')
+            ->name('api.topics.show');
+        // 某個使用者發佈的主題
         $api->get('users/{user}/topics', 'TopicsController@userIndex')
             ->name('api.users.topics.index');
 
