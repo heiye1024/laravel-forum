@@ -7,7 +7,8 @@
 - RESTful API 版本 https://github.com/webcodedemo/laravel-forum/tree/api
 
 ## 管理程式開發項目進度
-- https://github.com/webcodedemo/laravel-forum/projects
+- Web 版本 https://github.com/webcodedemo/laravel-forum/projects/1
+- RESTful API 版本 https://github.com/webcodedemo/laravel-forum/projects/2
 
 ## 開發筆記
 - https://github.com/webcodedemo/laravel-forum/wiki
