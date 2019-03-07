@@ -91,6 +91,9 @@ $api->version('v1', [
             // 刪除主題
             $api->delete('topics/{topic}', 'TopicsController@destroy')
                 ->name('api.topics.destroy');
+            // 發佈回覆(回覆一定屬於某個主題，所以設計成topics/{topic}/replies，為某個主題增加回覆，這樣會讓彼此的關係更加直覺)
+            $api->post('topics/{topic}/replies', 'RepliesController@store')
+                ->name('api.topics.replies.store');
         });
     });
 });
