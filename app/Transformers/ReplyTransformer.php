@@ -7,6 +7,9 @@ use League\Fractal\TransformerAbstract;
 
 class ReplyTransformer extends TransformerAbstract
 {
+    // 分別對應includeUser和includeTopic方法
+    protected $availableIncludes = ['user', 'topic'];
+
     public function transform(Reply $reply)
     {
         return [
@@ -17,5 +20,16 @@ class ReplyTransformer extends TransformerAbstract
             'created_at' => $reply->created_at->toDateTimeString(),
             'updated_at' => $reply->updated_at->toDateTimeString(),
         ];
+    }
+
+    public function includeUser(Reply $reply)
+    {
+        return $this->item($reply->user, new UserTransformer());
+    }
+
+    // 查詢回覆關聯的主題模型，使用TopicTransformer轉換並返回
+    public function includeTopic(Reply $reply)
+    {
+        return $this->item($reply->topic, new TopicTransformer());
     }
 }

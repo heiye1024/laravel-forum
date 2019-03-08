@@ -70,6 +70,12 @@ $api->version('v1', [
         // 某個使用者發佈的主題
         $api->get('users/{user}/topics', 'TopicsController@userIndex')
             ->name('api.users.topics.index');
+        // 主題回覆列表
+        $api->get('topics/{topic}/replies', 'RepliesController@index')
+            ->name('api.topics.replies.index');
+        // 某個使用者的回覆列表
+        $api->get('users/{user}/replies', 'RepliesController@userIndex')
+            ->name('api.users.replies.index');
 
         // 需要token驗證的API
         $api->group(['middleware' => 'api.auth'], function($api) {
