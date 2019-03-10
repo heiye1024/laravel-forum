@@ -12,10 +12,15 @@ class ReplyObserver
 {
     public function created(Reply $reply)
     {
-        $reply->topic->updateReplyCount();
+        $topic = $reply->topic;
+        $topic->increment('reply_count', 1);
 
-        // 通知主題作者有新的回覆
-        $reply->topic->user->notify(new TopicReplied($reply));
+
+        // 如果回覆的作者不是主題的作者，才需要通知
+        if ( ! $reply->user->isAuthorOf($topic)) {
+            // notify方法會將notification_count進行+1，所以$this->user()->notification_count就是使用者未讀消息數
+            $topic->user->notify(new TopicReplied($reply));
+        }
     }
 
     public function creating(Reply $reply)
@@ -25,6 +30,6 @@ class ReplyObserver
 
     public function deleted(Reply $reply)
     {
-        $reply->topic->updateReplyCount();
+        $reply->topic->decrement('reply_count', 1);
     }
 }

@@ -14,4 +14,12 @@ class NotificationsController extends Controller
 
         return $this->response->paginator($notifications, new NotificationTransformer());
     }
+
+    // 當有新的通知時，App\Observers\ReplyObserver.php 已經幫我們進行統計
+    public function stats()
+    {
+        return $this->response->array([
+            'unread_count' => $this->user()->notification_count,
+        ]);
+    }
 }

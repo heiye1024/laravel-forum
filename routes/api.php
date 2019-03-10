@@ -106,6 +106,9 @@ $api->version('v1', [
             // 消息通知列表
             $api->get('user/notifications', 'NotificationsController@index')
                 ->name('api.user.notifications.index');
+            // 未讀消息統計(stats是statistics的縮寫)
+            $api->get('user/notifications/stats', 'NotificationsController@stats')
+                ->name('api.user.notifications.stats');
         });
     });
 });
