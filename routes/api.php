@@ -112,6 +112,9 @@ $api->version('v1', [
             // 標示消息通知為已讀
             $api->patch('user/read/notifications', 'NotificationsController@read')
                 ->name('api.user.notifications.read');
+            // 目前登入使用者權限
+            $api->get('user/permissions', 'PermissionsController@index')
+                ->name('api.user.permissions.index');
         });
     });
 });
