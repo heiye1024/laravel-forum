@@ -109,6 +109,9 @@ $api->version('v1', [
             // 未讀消息統計(stats是statistics的縮寫)
             $api->get('user/notifications/stats', 'NotificationsController@stats')
                 ->name('api.user.notifications.stats');
+            // 標示消息通知為已讀
+            $api->patch('user/read/notifications', 'NotificationsController@read')
+                ->name('api.user.notifications.read');
         });
     });
 });
