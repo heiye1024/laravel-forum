@@ -79,6 +79,10 @@ $api->version('v1', [
         // 資源推薦
         $api->get('links', 'LinksController@index')
             ->name('api.links.index');
+        // 活躍使用者
+        $api->get('actived/users', 'UsersController@activedIndex')
+            ->name('api.actived.users.index');
+
 
         // 需要token驗證的API
         $api->group(['middleware' => 'api.auth'], function($api) {

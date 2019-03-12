@@ -69,4 +69,10 @@ class UsersController extends Controller
     {
         return $this->response->item($this->user(), new UserTransformer());
     }
+
+    // 直接調用$user->getActiveUsers()即可，活躍使用者的邏輯程式碼在Trait，app/Models/Traits/ActiveUserHelper.php
+    public function activedIndex(User $user)
+    {
+        return $this->response->collection($user->getActiveUsers(), new UserTransformer());
+    }
 }
