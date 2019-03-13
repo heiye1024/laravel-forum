@@ -91,6 +91,12 @@ class Kernel extends HttpKernel
 
         // Laravel 自帶的強制使用者電子郵件認證的中間件，為了更貼近我們的邏輯，已經在之前被重寫
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+
+        // 訪問流量控制，類似於「1分鐘只能請求10次」的需求，一般在API中使用
+        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+
+        // API語言設置
+        'change-locale' => \App\Http\Middleware\ChangeLocale::class,
     ];
 
     // 設定中間件優先級，此陣列定義了除「全局中間件」以外的中間件執行順序
