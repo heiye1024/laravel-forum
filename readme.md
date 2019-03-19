@@ -5,6 +5,7 @@
 ## 版本差異(Branch)
 - Web 版本 https://github.com/webcodedemo/laravel-forum
 - RESTful API 版本 https://github.com/webcodedemo/laravel-forum/tree/api
+- Passport 版本 https://github.com/webcodedemo/laravel-forum/tree/passport
 
 ## 管理程式開發項目進度
 - Web 版本 https://github.com/webcodedemo/laravel-forum/projects/1
