@@ -8,23 +8,23 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Api\SocialAuthorizationRequest;
 use App\Http\Requests\Api\AuthorizationRequest;
 
+use Zend\Diactoros\Response as Psr7Response;
+use Psr\Http\Message\ServerRequestInterface;
+use League\OAuth2\Server\Exception\OAuthServerException;
+use League\OAuth2\Server\AuthorizationServer;
+
 class AuthorizationsController extends Controller
 {
-    public function store(AuthorizationRequest $request)
+    // 注入AuthorizationServer和ServerRequestInterface，調用AuthorizationServer的respondToAccessTokenRequest方法並直接返回
+    // respondToAccessTokenRequest會依次處理：檢測client參數是否正確、檢測scope參數是否正確、通過使用者名稱找使用者、驗證使用者密碼是否正確、產生response並返回
+    // 最終返回的response是Zend\Diactoros\Response的實例，查看程式碼我們可以使用withStatus方法設置response的狀態碼，最後直接返回response即可
+    public function store(AuthorizationRequest $originRequest, AuthorizationServer $server, ServerRequestInterface $serverRequest)
     {
-        $username = $request->username;
-
-        filter_var($username, FILTER_VALIDATE_EMAIL) ?
-            $credentials['email'] = $username :
-            $credentials['phone'] = $username;
-
-        $credentials['password'] = $request->password;
-
-        if (!$token = \Auth::guard('api')->attempt($credentials)) {
-            return $this->response->errorUnauthorized(trans('auth.failed'));
+        try {
+           return $server->respondToAccessTokenRequest($serverRequest, new Psr7Response)->withStatus(201);
+        } catch(OAuthServerException $e) {
+            return $this->response->errorUnauthorized($e->getMessage());
         }
-
-        return $this->respondWithToken($token)->setStatusCode(201);
     }
 
     public function socialStore($type, SocialAuthorizationRequest $request)
@@ -86,17 +86,24 @@ class AuthorizationsController extends Controller
     }
 
     // 刷新 token
-    public function update()
+    public function update(AuthorizationServer $server, ServerRequestInterface $serverRequest)
     {
-        $token = Auth::guard('api')->refresh();
-        return $this->respondWithToken($token);
+        try {
+           return $server->respondToAccessTokenRequest($serverRequest, new Psr7Response);
+        } catch(OAuthServerException $e) {
+            return $this->response->errorUnauthorized($e->getMessage());
+        }
     }
 
     // 刪除 token
     public function destroy()
     {
-        Auth::guard('api')->logout();
-        return $this->response->noContent();
+        if (!empty($this->user())) {
+            $this->user()->token()->revoke();
+            return $this->response->noContent();
+        } else {
+            return $this->response->errorUnauthorized('The token is invalid.');
+        }
     }
 
     // 登入和第三方登入都應該一樣，所以抽出來成一個函數

@@ -9,6 +9,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Auth;
 use Spatie\Permission\Traits\HasRoles;
+// 用於檢查已經認證使用者的Token和使用範圍
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -16,6 +18,7 @@ class User extends Authenticatable implements JWTSubject
     use Traits\ActiveUserHelper;
     use HasRoles;
     use MustVerifyEmailTrait;
+    use HasApiTokens;
 
     use Notifiable {
         notify as protected laravelNotify;
@@ -104,5 +107,16 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    // 默認情況下，Passport會通過使用者的電子郵件找使用者，要支援手機登入，我們可以在使用者模型中定義findForPassport方法
+    // Passport會先檢查使用者模型是否存在findForPassport方法，如果存在就通過findForPassport找使用者，而不是使用默認的電子郵件
+    public function findForPassport($username)
+    {
+        filter_var($username, FILTER_VALIDATE_EMAIL) ?
+            $credentials['email'] = $username :
+            $credentials['phone'] = $username;
+
+        return self::where($credentials)->first();
     }
 }
