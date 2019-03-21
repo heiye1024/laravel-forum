@@ -12,9 +12,14 @@ use Zend\Diactoros\Response as Psr7Response;
 use Psr\Http\Message\ServerRequestInterface;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\AuthorizationServer;
+use App\Traits\PassportToken;
 
 class AuthorizationsController extends Controller
 {
+    // 在AuthorizationsController中增加PassportToken Trait，這樣我們在Controller中就可以直接通過getBearerTokenByUser方法直接為某個使用者產生完整的訪問Token
+    use PassportToken;
+
+
     // 注入AuthorizationServer和ServerRequestInterface，調用AuthorizationServer的respondToAccessTokenRequest方法並直接返回
     // respondToAccessTokenRequest會依次處理：檢測client參數是否正確、檢測scope參數是否正確、通過使用者名稱找使用者、驗證使用者密碼是否正確、產生response並返回
     // 最終返回的response是Zend\Diactoros\Response的實例，查看程式碼我們可以使用withStatus方法設置response的狀態碼，最後直接返回response即可
@@ -79,10 +84,8 @@ class AuthorizationsController extends Controller
                 break;
         }
 
-        // 由Server替使用者頒發授權頻證
-        // 第三方登入獲取 user 之後，我們可以使用 fromUser 方法為某一個使用者模型產生 token
-        $token = Auth::guard('api')->fromUser($user);
-        return $this->respondWithToken($token)->setStatusCode(201);
+        $result = $this->getBearerTokenByUser($user, '1', false);
+        return $this->response->array($result)->setStatusCode(201);
     }
 
     // 刷新 token
